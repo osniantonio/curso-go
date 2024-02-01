@@ -1,9 +1,5 @@
 package matematica
 
-import (
-	"fmt"
-)
-
 // Nome maiúsculo permite usar fora do pacote matematica
 // iniciando com minúsculo somente no mesmo pacote
 func Soma[T int | float64](a, b T) T {
