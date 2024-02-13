@@ -23,6 +23,7 @@ func TestCalculateTaxBatch(t *testing.T) {
 		{500.0, 5.0},
 		{1000.0, 10.0},
 		{1500.0, 10.0},
+		{0.0, 0.0},
 	}
 
 	for _, item := range table {
@@ -30,5 +31,17 @@ func TestCalculateTaxBatch(t *testing.T) {
 		if result != item.expected {
 			t.Errorf("Expected %f but go %f", item.expected, result)
 		}
+	}
+}
+
+func BenchmarkCalculateTax(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		CalculateTax(500.0)
+	}
+}
+
+func BenchmarkCalculateTax2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		CalculateTax2(500.0)
 	}
 }
