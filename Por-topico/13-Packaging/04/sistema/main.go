@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	m := math.NewMath{1, 2}
+	m := math.NewMath(1, 2)
 	println(m.Add())
 }

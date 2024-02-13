@@ -1,0 +1,19 @@
+go 1.19
+
+use (
+	./12-Banco-de-Dados/1
+	./12-Banco-de-Dados/2
+	./12-Banco-de-Dados/3
+	./12-Banco-de-Dados/4
+	./12-Banco-de-Dados/5
+	./12-Banco-de-Dados/6
+	./12-Banco-de-Dados/7
+	./12-Banco-de-Dados/8
+	./13-Packaging/01
+	./13-Packaging/02
+	./13-Packaging/03/math
+	./13-Packaging/03/sistema
+	./13-Packaging/04/math
+	./13-Packaging/04/sistema
+	./14-Testing/01
+)
