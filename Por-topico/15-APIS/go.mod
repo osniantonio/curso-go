@@ -3,11 +3,13 @@ module github.com/osniantonio/goexpert/15-APIS
 go 1.19
 
 require (
+	github.com/go-chi/chi/v5 v5.0.12
 	github.com/go-chi/jwtauth v1.2.0
 	github.com/google/uuid v1.6.0
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/crypto v0.19.0
+	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gorm v1.25.7
 )
@@ -40,7 +42,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a // indirect
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
