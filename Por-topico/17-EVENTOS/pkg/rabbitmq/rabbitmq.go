@@ -1,6 +1,10 @@
 package rabbitmq
 
-import amqp "github.com/rabbitmq/amqp091-go"
+import (
+	"context"
+
+	amqp "github.com/rabbitmq/amqp091-go"
+)
 
 // criando um canal no RabbitMQ
 func OpenChannel() (*amqp.Channel, error) {
@@ -17,9 +21,9 @@ func OpenChannel() (*amqp.Channel, error) {
 	return ch, nil
 }
 
-func Consume(ch *amqp.Channel, out chan<- amqp.Delivery) error {
+func Consume(ch *amqp.Channel, out chan<- amqp.Delivery, queue string) error {
 	msgs, err := ch.Consume(
-		"minhafila",
+		queue,
 		"go-consumer",
 		false,
 		false,
@@ -32,6 +36,41 @@ func Consume(ch *amqp.Channel, out chan<- amqp.Delivery) error {
 	}
 	for msg := range msgs {
 		out <- msg
+	}
+	return nil
+}
+
+// ch.Publish is deprecated: Use PublishWithContext instead
+func Publish(ch *amqp.Channel, body string, exchange string) error {
+	err := ch.Publish(
+		exchange, // Exchange name
+		"",       // Routing key
+		false,    // Mandatory
+		false,    // Immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(body),
+		},
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// método não deprecated e utilizar dessa forma
+func PublishWithContext(ctx context.Context, ch *amqp.Channel, body string, exchange string) error {
+	err := ch.PublishWithContext(ctx,
+		exchange, // Exchange name
+		"",       // Routing key
+		false,    // Mandatory
+		false,    // Immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(body),
+		})
+	if err != nil {
+		return err
 	}
 	return nil
 }
