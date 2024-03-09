@@ -1,6 +1,7 @@
 package events
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -51,6 +52,8 @@ func (suite *EventDispatcherTestSuite) SetupTest() {
 	}
 	suite.event = TestEvent{Name: "test", Payload: "test"}
 	suite.event2 = TestEvent{Name: "test2", Payload: "test2"}
+
+	fmt.Println("Passou em SetupTest")
 }
 
 func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register() {
@@ -74,6 +77,25 @@ func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register_WithSameHand
 	err = suite.eventDispatcher.Register(suite.event.Name, &suite.handler)
 	suite.Equal(ErrHandlerAlreadyRegistered, err)
 	suite.Equal(1, len(suite.eventDispatcher.handlers[suite.event.Name]))
+}
+
+func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register_Clear() {
+	// Event 1
+	err := suite.eventDispatcher.Register(suite.event.Name, &suite.handler)
+	suite.Nil(err)
+	suite.Equal(1, len(suite.eventDispatcher.handlers[suite.event.Name]))
+
+	err = suite.eventDispatcher.Register(suite.event.Name, &suite.handler2)
+	suite.Nil(err)
+	suite.Equal(2, len(suite.eventDispatcher.handlers[suite.event.Name]))
+
+	// Event 2
+	err = suite.eventDispatcher.Register(suite.event2.Name, &suite.handler3)
+	suite.Nil(err)
+	suite.Equal(1, len(suite.eventDispatcher.handlers[suite.event2.Name]))
+
+	suite.eventDispatcher.Clear()
+	suite.Equal(0, len(suite.eventDispatcher.handlers))
 }
 
 func TestSuite(t *testing.T) {
