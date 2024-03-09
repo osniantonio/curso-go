@@ -80,6 +80,7 @@ func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register_WithSameHand
 }
 
 func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register_Clear() {
+
 	// Event 1
 	err := suite.eventDispatcher.Register(suite.event.Name, &suite.handler)
 	suite.Nil(err)
@@ -96,6 +97,22 @@ func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register_Clear() {
 
 	suite.eventDispatcher.Clear()
 	suite.Equal(0, len(suite.eventDispatcher.handlers))
+}
+
+func (suite *EventDispatcherTestSuite) TestEventDispatcher_Has() {
+
+	// Event 1
+	err := suite.eventDispatcher.Register(suite.event.Name, &suite.handler)
+	suite.Nil(err)
+	suite.Equal(1, len(suite.eventDispatcher.handlers[suite.event.Name]))
+
+	err = suite.eventDispatcher.Register(suite.event.Name, &suite.handler2)
+	suite.Nil(err)
+	suite.Equal(2, len(suite.eventDispatcher.handlers[suite.event.Name]))
+
+	assert.True(suite.T(), suite.eventDispatcher.Has(suite.event.Name, &suite.handler))
+	assert.True(suite.T(), suite.eventDispatcher.Has(suite.event.Name, &suite.handler2))
+	assert.False(suite.T(), suite.eventDispatcher.Has(suite.event.Name, &suite.handler3))
 }
 
 func TestSuite(t *testing.T) {
