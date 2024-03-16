@@ -8,4 +8,5 @@ import "github.com/osniantonio/goexpert/13-GRAPHQL/internal/database"
 
 type Resolver struct {
 	CategoryDB *database.Category
+	CourseDB   *database.Course
 }
