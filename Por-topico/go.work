@@ -23,4 +23,5 @@ use (
 	./18-GOPRIVATE
 	./19-GRAPHQL
 	./20-GRPC
+	./21-UPLOADS3
 )
